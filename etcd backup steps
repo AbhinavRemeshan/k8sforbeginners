@@ -1,0 +1,48 @@
+sudo apt-get update
+
+sudo apt install etcd-client
+
+
+export advertise_url=https://172.31.33.54:2379
+
+sudo ETCDCTL_API=3 etcdctl --endpoints $advertise_url        --cacert /etc/kubernetes/pki/etcd/ca.crt      --cert /etc/kubernetes/pki/etcd/server.crt      --key /etc/kubernetes/pki/etcd/server.key     snapshot save /tmp/etcd_backup.db
+
+ls -ltr /tmp/etcd_backup.db   ----to list the file
+
+
+
+
+to save the backup to a file
+
+sudo ETCDCTL_API=3 etcdctl --endpoints $advertise_url    --cacert /etc/kubernetes/pki/etcd/ca.crt     --cert /etc/kubernetes/pki/etcd/server.crt       --key /etc/kubernetes/pki/etcd/server.key       --write-out=table snapshot status /tmp/etcd_backup.db > /tmp/cka_q2.txt
+
+i) Check etcdctl command and install etcd-client if not available
+
+sudo apt-get update
+
+sudo apt install etcd-client
+
+ii) Then get the advertise_url from etcd pod from kube-system ns
+
+iii) then use the below command
+
+export advertise_url = https://172.31.29.84:2379
+
+iv)take the backup
+
+ sudo ETCDCTL_API=3 etcdctl --endpoints $advertise_url \
+
+	--cacert /etc/kubernetes/pki/etcd/ca.crt \
+
+	--cert /etc/kubernetes/pki/etcd/server.crt \
+
+	--key /etc/kubernetes/pki/etcd/server.key \
+
+	snapshot save /tmp/etcd_backup.db
+
+v) verify the snapshot
+
+sudo ETCDCTL_API=3 etcdctl --endpoints $advertise_url    --cacert /etc/kubernetes/pki/etcd/ca.crt     --cert /etc/kubernetes/pki/etcd/server.crt       --key /etc/kubernetes/pki/etcd/server.key       --write-out=table snapshot status /tmp/etcd_backup.db > /tmp/cka_q2.txt
+
+verify the backup output file (check the table)
+
